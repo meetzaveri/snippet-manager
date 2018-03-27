@@ -8,7 +8,7 @@ export function ApiCall(apiname,methodType,data,headers){
     return new Promise((resolve, reject) => {
        var config = {
             method: methodType, // or 'PUT'
-            body: data,
+            body: JSON.stringify(data),
             mode : 'cors',
             headers:  {
               'Content-Type': 'application/json'
