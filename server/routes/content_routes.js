@@ -33,6 +33,7 @@ module.exports = function(app, db) {
     app.post('/codes', (req, res) => {
         // write parameters or json of the request here
         // create your codes here
+        console.log('Request Payload',req.body);
         const code= { name: req.body.name, content: req.body.content};
         db.collection('codes').insert(code, (err,result) => {
             if (err){
@@ -42,7 +43,6 @@ module.exports = function(app, db) {
                 res.send(result.ops[0]);
             }
         });
-        console.log('req.body ', req.body);
     });
 
     // Updating the codes
