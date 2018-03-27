@@ -1,4 +1,6 @@
 var ObjectID = require('mongodb').ObjectID;
+var showdown  = require('showdown'),
+    converter = new showdown.Converter();
 
 module.exports = function(app, db) {
 
@@ -34,7 +36,7 @@ module.exports = function(app, db) {
         // write parameters or json of the request here
         // create your codes here
         console.log('Request Payload',req.body);
-        const code= { name: req.body.name, content: req.body.content};
+        const code= { name: req.body.name, content: converter.makeHtml(req.body.content), language:req.body.language};
         db.collection('codes').insert(code, (err,result) => {
             if (err){
                 console.log('Error in if ');

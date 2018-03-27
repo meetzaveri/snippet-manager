@@ -30,6 +30,7 @@ export default {
     return {
       code : '',
       title: '',
+      language : 'JS',
       form: {
         email: '',
         title: '',
@@ -49,7 +50,8 @@ export default {
       console.log('Into on submit');
       var name = this.title;
       var content = this.code;
-      ApiCall(API.getCodes,'POST',{name,content})
+      var language = this.language;
+      ApiCall(API.getCodes,'POST',{name,content,language})
       .then((response) => {
         console.log('Response',response);
       })
