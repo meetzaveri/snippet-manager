@@ -5,10 +5,18 @@
                     label="Code Snippet Title"
                     label-for="exampleInput1">
         <b-form-input id="exampleInput1"
+        class="mb-3"
                       type="text"
                       v-model="title"
                       required
                       placeholder="Enter name">
+        </b-form-input>
+        <b-form-input id="exampleInput2"
+        class="mb-3"
+                      type="text"
+                      v-model="language"
+                      required
+                      placeholder="Enter language">
         </b-form-input>
       </b-form-group>
       <label> Write Code</label>
@@ -30,7 +38,7 @@ export default {
     return {
       code : '',
       title: '',
-      language : 'JS',
+      language : '',
       form: {
         email: '',
         title: '',

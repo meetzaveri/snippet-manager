@@ -5,16 +5,21 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state:{
-        counter : 0
+        counter : 0,
+        binData : [],
     },
 
    // Does modifies state and perfect mechanism to also mutate it
    mutations :{
-       increment : (state, payload) =>{
-           state.counter += payload;
+       fillData(state,payload){
+           state.binData = payload.codeData;
        },
-       decrement : (state,payload)=>{
-           state.counter -= payload;
+       deleteItem(state,payload){
+           state.binData.forEach((item,index) => {
+               if(item.id === payload.id){
+                   state.binData.splice(index,1);
+               }
+           })
        }
    },
 });

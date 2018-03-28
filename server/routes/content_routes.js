@@ -2,6 +2,9 @@ var ObjectID = require('mongodb').ObjectID;
 var showdown  = require('showdown'),
     converter = new showdown.Converter();
 
+showdown.setFlavor('github');
+converter.setFlavor('github');
+
 module.exports = function(app, db) {
 
     // Getting the individual codesnippets

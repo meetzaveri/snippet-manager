@@ -28,7 +28,7 @@ export function ApiCall(apiname,methodType,data,headers){
               }
               else if((response.status === 200) || 
               ((response.status === 304) )) {
-                  return resolve(response.json());
+                    resolve(response.json());
               }
           })
           .catch(error => {

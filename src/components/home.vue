@@ -47,12 +47,15 @@
     >
       
       <template slot="name" slot-scope="row">{{row.value}}</template>
-      <template slot="content" slot-scope="row">{{row.value}}</template>
+      <template slot="language" slot-scope="row">{{row.value}}</template>
 
       <template slot="actions" slot-scope="row">
         <!-- We use @click.stop here to prevent a 'row-clicked' event from also happening -->
         <b-button size="sm" :variant="buttons.primary" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">
           Open
+        </b-button>
+        <b-button size="sm" :variant="buttons.danger" @click.stop="deleteRecord(row.item, row.index, $event.target)" class="mr-1">
+          Delete
         </b-button>
       </template>
       <template slot="row-details" slot-scope="row">
@@ -67,7 +70,7 @@
      <b-modal id="modalInfo" ref="modalInfo" @hide="resetModal" :body-text-variant="modalInfo.item.department" :title="modalInfo.title" ok-only>
         <!-- <pre>Title - {{ modalAddItems.title }}</pre> -->
         
-        <div v-html="specificContent"></div>
+        <div v-html="modalInfo.item.content"></div>
           <div slot="modal-footer" class="w-100">
             <b-row>
                 <b-col class="text-center"> 
@@ -83,17 +86,16 @@
 <script>
 import API from '../api/getApi.js';
 import { ApiCall } from '../api/getApi.js';
-import showdown from 'showdown';
-var converter = new showdown.Converter();
+import APIDELETE,{ DeleteApiCall } from '../api/deleteApi'
 
 export default {
     data () {
     return {
-      items: [{name:'fe', content:'#note'},{name:'zz', content:'#hello'}],
+      items: [],
       buttons: {primary: 'primary', danger:'danger', warning: 'warning', success: 'success' },
       fields: [
         { key: 'name', label: 'Name', sortable: true, 'class': 'text-center' },
-        { key: 'content', label: 'content', sortable: true, 'class': 'text-center' },
+        { key: 'language', label: 'language', sortable: true, 'class': 'text-center' },
         { key: 'actions', label: 'Actions', 'class': 'text-center' }
       ],
       variants: [
@@ -113,16 +115,25 @@ export default {
     }
   },
 created (){
-  ApiCall(API.getCodes)
+  ApiCall(API.getCodes,'GET')
   .then((responsJson) => {
     console.log('Response in vue',responsJson);
-    this.specificContent = responsJson[responsJson.length - 1].content;
-    console.log(this.specificContent);
+    var structuredData = responsJson.map(item => {
+      item.id = item._id;
+      if(item.language){
+        item.language=item.language
+      }
+      else {
+        item.language = 'none'
+      }
+      return item;
+    })
+    this.$store.commit('fillData',{codeData:structuredData});
+    this.items = this.$store.state.binData
   })
-},
-computed(){
-  this.items.content = converter.makeHtml(this.items.content);
-  console.log(this.items.content);
+  .catch((err) => {
+    console.log('err=',err);
+  })
 },
 methods: {
    resetModal () {
@@ -133,15 +144,22 @@ methods: {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
-       console.log('Response');
+      //  console.log('Response');
     },
     info (item, index,button) {
       this.modalInfo.title = `Open`
       this.modalInfo.content = JSON.stringify(item, null, 2)
       this.modalInfo.item = JSON.parse(JSON.stringify(item))
       this.$root.$emit('bv::show::modal', 'modalInfo', button)
-      this.items.content = converter.makeHtml(this.items.content);
-      console.log(this.items.content);
+      // console.log('In Info',this.modalInfo.item);
+    },
+    deleteRecord(item, index,button){
+      console.log('Item to be deleted',item);
+      DeleteApiCall(APIDELETE.deleteCodes+'/'+item.id,'DELETE',{id:item.id})
+      .then((responsJson) => {
+        this.$store.commit('deleteItem',{id : item.id});
+        console.log(responsJson);
+      })
     }
 }
 }
