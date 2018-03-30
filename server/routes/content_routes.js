@@ -1,4 +1,9 @@
 var ObjectID = require('mongodb').ObjectID;
+var showdown  = require('showdown'),
+    converter = new showdown.Converter();
+
+showdown.setFlavor('github');
+converter.setFlavor('github');
 
 module.exports = function(app, db) {
 
@@ -33,7 +38,8 @@ module.exports = function(app, db) {
     app.post('/codes', (req, res) => {
         // write parameters or json of the request here
         // create your codes here
-        const code= { name: req.body.name, content: req.body.content};
+        console.log('Request Payload',req.body);
+        const code= { name: req.body.name, content: converter.makeHtml(req.body.content), language:req.body.language};
         db.collection('codes').insert(code, (err,result) => {
             if (err){
                 console.log('Error in if ');
@@ -42,7 +48,6 @@ module.exports = function(app, db) {
                 res.send(result.ops[0]);
             }
         });
-        console.log('req.body ', req.body);
     });
 
     // Updating the codes

@@ -4,24 +4,31 @@ const APIS = {
 
 export default APIS;
 
-export function ApiCall(apiname,headers,data){
+export function ApiCall(apiname,methodType,data,headers){
     return new Promise((resolve, reject) => {
-        fetch(apiname, {
-            method: 'GET', // or 'PUT'
-            body: JSON.stringify(data), 
+       var config = {
+            method: methodType, // or 'PUT'
+            body: JSON.stringify(data),
             mode : 'cors',
-            headers: headers ? headers : new Headers({
+            headers:  {
               'Content-Type': 'application/json'
-            })
-          })
+            }
+       }
+       console.log('Config',config);
+       if(methodType === 'GET'){
+            delete config.body;
+        }
+
+        fetch(apiname, config)
+          
           .then((response) => {
               if(response.status === 400){
                   reject(new Error('Unauthorized'));
                   console.log('ERROR')
               }
               else if((response.status === 200) || 
-              ((response.status ===304) )) {
-                  return resolve(response.json());
+              ((response.status === 304) )) {
+                    resolve(response.json());
               }
           })
           .catch(error => {

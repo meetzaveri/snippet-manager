@@ -1,57 +1,50 @@
 <template>
-  <div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+  <div style="width:600px">
+    <b-form >
       <b-form-group id="exampleInputGroup1"
-                    label="Email address:"
-                    label-for="exampleInput1"
-                    description="We'll never share your email with anyone else.">
+                    label="Code Snippet Title"
+                    label-for="exampleInput1">
         <b-form-input id="exampleInput1"
-                      type="email"
-                      v-model="form.email"
-                      required
-                      placeholder="Enter email">
-        </b-form-input>
-      </b-form-group>
-      <b-form-group id="exampleInputGroup2"
-                    label="Your Name:"
-                    label-for="exampleInput2">
-        <b-form-input id="exampleInput2"
+        class="mb-3"
                       type="text"
-                      v-model="form.name"
+                      v-model="title"
                       required
                       placeholder="Enter name">
         </b-form-input>
-      </b-form-group>
-      <b-form-group id="exampleInputGroup3"
-                    label="Food:"
-                    label-for="exampleInput3">
-        <b-form-select id="exampleInput3"
-                      :options="foods"
+        <b-form-input id="exampleInput2"
+        class="mb-3"
+                      type="text"
+                      v-model="language"
                       required
-                      v-model="form.food">
-        </b-form-select>
+                      placeholder="Enter language">
+        </b-form-input>
       </b-form-group>
-      <b-form-group id="exampleGroup4">
-        <b-form-checkbox-group v-model="form.checked" id="exampleChecks">
-          <b-form-checkbox value="me">Check me out</b-form-checkbox>
-          <b-form-checkbox value="that">Check that out</b-form-checkbox>
-        </b-form-checkbox-group>
-      </b-form-group>
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
+      <label> Write Code</label>
+       <b-form-group class="mb-3">
+         
+         <textarea style="width:600px" rows="10" v-model="code"></textarea>
+       </b-form-group>
+    
+      <b-button variant="primary" @click="onSubmit">Submit</b-button>
     </b-form>
   </div>
 </template>
 
 <script>
+import API,{ ApiCall } from '../api/getApi';
+
 export default {
   data () {
     return {
+      code : '',
+      title: '',
+      language : '',
       form: {
         email: '',
-        name: '',
+        title: '',
         food: null,
-        checked: []
+        checked: [],
+        code : ''
       },
       foods: [
         { text: 'Select One', value: null },
@@ -61,21 +54,18 @@ export default {
     }
   },
   methods: {
-    onSubmit (evt) {
-      evt.preventDefault();
-      alert(JSON.stringify(this.form));
+    onSubmit () {
+      console.log('Into on submit');
+      var name = this.title;
+      var content = this.code;
+      var language = this.language;
+      ApiCall(API.getCodes,'POST',{name,content,language})
+      .then((response) => {
+        console.log('Response',response);
+      })
+
     },
-    onReset (evt) {
-      evt.preventDefault();
-      /* Reset our form values */
-      this.form.email = '';
-      this.form.name = '';
-      this.form.food = null;
-      this.form.checked = [];
-      /* Trick to reset/clear native browser form validation state */
-      this.show = false;
-      this.$nextTick(() => { this.show = true });
-    }
+    
   }
 }
 </script>
