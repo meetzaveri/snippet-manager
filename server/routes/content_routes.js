@@ -3,7 +3,6 @@ var showdown  = require('showdown'),
     converter = new showdown.Converter();
 
 showdown.setFlavor('github');
-converter.setFlavor('github');
 
 module.exports = function(app, db) {
 
@@ -39,6 +38,7 @@ module.exports = function(app, db) {
         // write parameters or json of the request here
         // create your codes here
         console.log('Request Payload',req.body);
+        showdown.setFlavor('github');
         const code= { name: req.body.name, content: converter.makeHtml(req.body.content), language:req.body.language};
         db.collection('codes').insert(code, (err,result) => {
             if (err){

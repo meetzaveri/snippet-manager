@@ -67,10 +67,12 @@
       </template>
     </b-table>
 
-     <b-modal id="modalInfo" ref="modalInfo" @hide="resetModal" :body-text-variant="modalInfo.item.department" :title="modalInfo.title" ok-only>
+     <b-modal id="modalInfo" size="lg" ref="modalInfo" @hide="resetModal" :body-text-variant="modalInfo.item.department" :title="modalInfo.title" ok-only>
         <!-- <pre>Title - {{ modalAddItems.title }}</pre> -->
-        
         <div v-html="modalInfo.item.content"></div>
+        <b-pagination align="center" size="md" :total-rows="100" v-model="paginationCurrentPage" :per-page="10" @input="doThis">
+        </b-pagination>
+        
           <div slot="modal-footer" class="w-100">
             <b-row>
                 <b-col class="text-center"> 
@@ -103,6 +105,7 @@ export default {
       ],
       specificContent :'',
       loading : false,
+      paginationCurrentPage : 1,
       currentPage: 1,
       totalRows: null,
       filter: null,
@@ -139,6 +142,9 @@ methods: {
    resetModal () {
       this.modalInfo.title = ''
       this.modalInfo.content = ''
+    },
+    doThis (){
+      console.log('Current Page',this.paginationCurrentPage);
     },
     onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
