@@ -6,9 +6,7 @@
         <b-form-group horizontal label="Search" class="mb-0">
           <b-input-group>
             <b-form-input v-model="filter" placeholder="Type to Search" />
-            
               <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
-            
           </b-input-group>
         </b-form-group>
       </b-col>
@@ -67,10 +65,23 @@
       </template>
     </b-table>
 
-     <b-modal id="modalInfo" ref="modalInfo" @hide="resetModal" :body-text-variant="modalInfo.item.department" :title="modalInfo.title" ok-only>
+     <b-modal id="modalInfo" size="lg" ref="modalInfo" @hide="resetModal" :body-text-variant="modalInfo.item.department" :title="modalInfo.title" ok-only>
         <!-- <pre>Title - {{ modalAddItems.title }}</pre> -->
+        <div v-if="typeof(modalInfo.item.content) === 'object'">
+          <div v-if="inBox === undefined || inBox === '' || inBox === null">
+            No Content
+          </div>
+          <div v-else>
+            <div v-html="inBox"></div>
+          </div>
+          <b-pagination align="center" size="md" :total-rows="100" v-model="paginationCurrentPage" :per-page="modalInfo.item.totalPages" @input="scrollLeft">
+            </b-pagination>
+        </div>
+        <div v-else>
+          <div v-html="modalInfo.item.content"></div>
+        </div>
         
-        <div v-html="modalInfo.item.content"></div>
+        
           <div slot="modal-footer" class="w-100">
             <b-row>
                 <b-col class="text-center"> 
@@ -102,13 +113,17 @@ export default {
         'primary'
       ],
       specificContent :'',
+      inBox : null,
       loading : false,
+      paginationCurrentPage : 1,
+      totalPages : null,
       currentPage: 1,
       totalRows: null,
       filter: null,
       bordered: true,
       hover: true,
       dummyData : [],
+      isContentArray : false,
       modalInfo: { title: '', content: '', item : {} },
       modalAddItems: { title: 'Add new item' },
       fillItems : { phone: null, content: '', name: '', location:'', department : 'IT' },
@@ -118,8 +133,21 @@ created (){
   ApiCall(API.getCodes,'GET')
   .then((responsJson) => {
     console.log('Response in vue',responsJson);
-    var structuredData = responsJson.map(item => {
+    var structuredData = responsJson.map((item,index) => {
       item.id = item._id;
+      if(typeof(item.content) === "object"){
+        this.isContentArray = true;
+        item.type = 'codeBook';
+        if(item.content.length < 5){
+          item.totalPages = 20
+        }
+        if(item.content.length > 5  &&  item.content.length < 10){
+          item.totalPages = 10
+        }
+      }
+      else{
+        item.type = 'snippet';
+      }
       if(item.language){
         item.language=item.language
       }
@@ -140,6 +168,12 @@ methods: {
       this.modalInfo.title = ''
       this.modalInfo.content = ''
     },
+    scrollLeft (){
+      console.log('Current Page',this.paginationCurrentPage);
+      var ind = this.paginationCurrentPage;
+      this.inBox = this.modalInfo.item.content[ind - 1];
+      console.log('Inbox',this.inBox);
+    },
     onFiltered (filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
@@ -148,8 +182,9 @@ methods: {
     },
     info (item, index,button) {
       this.modalInfo.title = `Open`
-      this.modalInfo.content = JSON.stringify(item, null, 2)
-      this.modalInfo.item = JSON.parse(JSON.stringify(item))
+      this.modalInfo.content = JSON.stringify(item, null, 2);
+      this.modalInfo.item = JSON.parse(JSON.stringify(item));
+      this.inBox = this.modalInfo.item.content[this.paginationCurrentPage - 1];
       this.$root.$emit('bv::show::modal', 'modalInfo', button)
       // console.log('In Info',this.modalInfo.item);
     },

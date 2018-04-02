@@ -3,7 +3,6 @@ var showdown  = require('showdown'),
     converter = new showdown.Converter();
 
 showdown.setFlavor('github');
-converter.setFlavor('github');
 
 module.exports = function(app, db) {
 
@@ -39,7 +38,23 @@ module.exports = function(app, db) {
         // write parameters or json of the request here
         // create your codes here
         console.log('Request Payload',req.body);
-        const code= { name: req.body.name, content: converter.makeHtml(req.body.content), language:req.body.language};
+        showdown.setFlavor('github');
+        var content = req.body.content;
+        var finalContent = null;
+        if(req.body.fileType === 'single'){
+            finalContent = converter.makeHtml(content) ;
+        }
+        else if(req.body.fileType === 'multiple') {
+            console.log('Into multiple')
+            finalContent = content.map((item) => {
+                item =  converter.makeHtml(item);
+                return item;
+             })
+        }
+        else{
+            res.send('Error in sending')
+        }
+        const code= { name: req.body.name, content: finalContent, language:req.body.language};
         db.collection('codes').insert(code, (err,result) => {
             if (err){
                 console.log('Error in if ');
