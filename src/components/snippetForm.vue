@@ -70,7 +70,8 @@ export default {
       var name = this.title;
       var content = this.code;
       var language = this.language;
-      ApiCall(API.getCodes,'POST',{name,content,language})
+      var fileType = 'single';
+      ApiCall(API.getCodes,'POST',{name,content,language,fileType})
       .then((response) => {
         console.log('Response',response);
         this.$toasted.show('Submitted successfully');

@@ -8,23 +8,22 @@
         class="mb-3"
                       type="text"
                       v-model="title"
-                      required
                       placeholder="Enter name">
         </b-form-input>
         <b-form-input id="exampleInput2"
         class="mb-3"
                       type="text"
                       v-model="language"
-                      required
                       placeholder="Enter language">
         </b-form-input>
+        <b-form-select v-model="totalPages" :options="options" class="mb-3" />
       </b-form-group>
 
       <label><b-btn id="popoverButton-sync" variant="success">Guide to Markdown</b-btn></label>
        <b-form-group class="mb-3">
          
          <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code snippet"></textarea>
-
+          <b-btn class="btn-custom" v-show="onEditText" variant="danger" @click="updateCodeText">Update<i style="padding-left: 3px;" class="icon-check"></i></b-btn>
        </b-form-group>
         
         <b-pagination align="center" size="md" :total-rows="100" v-model="paginationCurrentPage" :per-page="totalPages" @input="scrollLeft">
@@ -56,12 +55,17 @@ export default {
   data () {
     return {
       code : '',
-      totalPages : 10,
+      totalPages : null,
       title: '',
       language : '',
       paginationCurrentPage : '1',
       show: true,
-      codeWarehouse : []
+      codeWarehouse : [],
+      onEditText : false,
+      options: [
+        { value: 5, text: '5 pages' },
+        { value: 10, text: '10 pages' },
+      ]
     }
   },
   methods: {
@@ -73,9 +77,12 @@ export default {
                 this.codeWarehouse.push(this.code);
                 console.log('Pushed on 1',this.codeWarehouse.length);
                 this.code = '';
+                this.onEditText = false;
             }
             else{
-               
+              this.code = this.codeWarehouse[currentPage] ;
+                console.log('When 1st page is forced');
+                 this.onEditText = true;
             }
             
         }
@@ -84,12 +91,13 @@ export default {
                 this.codeWarehouse.push(this.code);
                 console.log('Pushed on 1',this.codeWarehouse.length);
                 this.code = '';
+                this.onEditText = false;
             }
-            else{
-                 this.codeWarehouse.splice(1,1,this.code);
-                 this.code = '';
+            else {
+                 this.code = this.codeWarehouse[currentPage] ;
+                 console.log('When 2nd page is forced');
+                 this.onEditText = true;
             }
-            
         }
         else if(currentPage > 2){
             console.log('Current Page > 2',currentPage,this.codeWarehouse.length);
@@ -97,6 +105,7 @@ export default {
                 console.log('Normal Behaviour',currentPage,this.codeWarehouse.length  )
                 this.codeWarehouse.push(this.code);
                 this.code = '';
+                this.onEditText = false;
             }
             else if(currentPage < (this.codeWarehouse.length )){
                 this.code = this.codeWarehouse[currentPage + 1] ;
@@ -104,23 +113,31 @@ export default {
                     console.log('Into code warehouse');
                     if(currentPage === index + 1){
                         console.log('MATCHED INDEX AND CURRENT', currentPage,index + 1,this.codeWarehouse[index + 1]);
+                        this.onEditText = true;
                         this.code = this.codeWarehouse[index + 1] ;
                         this.codeWarehouse.splice(index + 1,1,this.code);
                     }
                 })
-                
-                
             }
         }
         
         console.log('Final Code Base ',this.codeWarehouse)
     },
+    updateCodeText () {
+      var currentPage = this.paginationCurrentPage;
+      var code = this.code;
+      this.codeWarehouse.splice(currentPage,1,code);
+      console.log('Updated code warehouse ',this.codeWarehouse);
+      this.onEditText = false;
+      this.$toasted.show('Updated')
+    },
     onSubmit () {
       let converter = new showdown.Converter();
       var name = this.title;
-      var content = this.code;
+      var content = this.codeWarehouse;
       var language = this.language;
-      ApiCall(API.getCodes,'POST',{name,content,language})
+      var fileType = 'multiple'
+      ApiCall(API.getCodes,'POST',{name,content,language,fileType})
       .then((response) => {
         console.log('Response',response);
         this.$toasted.show('Submitted successfully');
@@ -131,3 +148,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.btn-custom{
+    position: absolute;
+    top: 313px;
+    right: 561px;
+    padding: 3px 7px;
+}
+</style>
