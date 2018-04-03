@@ -22,7 +22,7 @@
       <label><b-btn id="popoverButton-sync" variant="success">Guide to Markdown</b-btn></label>
        <b-form-group class="mb-3">
          
-         <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code snippet"></textarea>
+         <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code snippets (Start with intro)"></textarea>
           <b-btn class="btn-custom" v-show="onEditText" variant="danger" @click="updateCodeText">Update<i style="padding-left: 3px;" class="icon-check"></i></b-btn>
        </b-form-group>
         
@@ -137,11 +137,15 @@ export default {
       var content = this.codeWarehouse;
       var language = this.language;
       var fileType = 'multiple'
-      ApiCall(API.getCodes,'POST',{name,content,language,fileType})
-      .then((response) => {
-        console.log('Response',response);
-        this.$toasted.show('Submitted successfully');
-      })
+      var title  = 'Title - ' + this.title;
+      content.splice(0,1,title);
+      console.log('Content', content)
+
+      // ApiCall(API.getCodes,'POST',{name,content,language,fileType})
+      // .then((response) => {
+      //   console.log('Response',response);
+      //   this.$toasted.show('Submitted successfully');
+      // })
 
     },
     
