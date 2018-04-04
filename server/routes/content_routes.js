@@ -9,36 +9,35 @@ module.exports = function(app, db) {
    
     app.post('/run-code',(req,res) => {
         var data = {
-        cpu_extra_time:"0.5",
-        cpu_time_limit:"2",
-        enable_per_process_and_thread_memory_limit:true,
-        enable_per_process_and_thread_time_limit:false,
-        language_id:req.body.langId,
-        max_file_size:"1024",
-        max_processes_and_or_threads:"30",
-        memory_limit:"128000",
-        number_of_run:"19",
-        source_code:req.body.sourcecode,
-        stack_limit:"64000",
-        stdin:"",
-        wall_time_limit:"5"
-}
-console.log('Before axios');
-    axios.defaults.headers.post['Content-Type'] = 'application/json';
-    axios({
-        baseURL: 'https://api.judge0.com',
-        method: 'post',
-        url: '/submissions?wait=true',
-        data: data,
+            cpu_extra_time:"0.5",
+            cpu_time_limit:"2",
+            enable_per_process_and_thread_memory_limit:true,
+            enable_per_process_and_thread_time_limit:false,
+            language_id:req.body.langId,
+            max_file_size:"1024",
+            max_processes_and_or_threads:"30",
+            memory_limit:"128000",
+            number_of_run:"19",
+            source_code:req.body.sourcecode,
+            stack_limit:"64000",
+            stdin:"",
+            wall_time_limit:"5"
+        }
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
+        axios({
+            baseURL: 'https://api.judge0.com',
+            method: 'post',
+            url: '/submissions?wait=true',
+            data: data,
+        })
+        .then(function (response) {
+            console.log('Response axios',response.data.stdout);
+            res.send(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     })
-    .then(function (response) {
-        console.log('Response axios',response.data.stdout);
-        res.send(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
-})
 
     // Getting the individual codesnippets
     app.get('/codes/:id', (req, res) => {

@@ -16,7 +16,7 @@ export function ApiCall(apiname,methodType,data,headers){
               'Content-Type': 'application/json'
             }
        }
-       console.log('Config',config);
+    //    console.log('Config',config);
        if(methodType === 'GET'){
             delete config.body;
         }

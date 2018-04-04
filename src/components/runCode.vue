@@ -14,15 +14,14 @@
       <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code snippet"></textarea>
       <b-button variant="primary" @click="onSubmit">Submit</b-button>
     </b-form>
-  <div v-if="outputIsReady">
-      <textarea style="width:600px" rows="10" v-model="realOutput" placeholder="Enter code snippet"></textarea>
-  </div>
+    <div v-if="outputIsReady">
+        <textarea style="width:600px" rows="10" v-model="realOutput" placeholder="Enter code snippet"></textarea>
+    </div>
   </div>
 </template>
 
 <script>
 import API,{ ApiCall } from '../api/getApi';
-import showdown from 'showdown';
 
 export default {
   data () {
@@ -41,28 +40,34 @@ export default {
   mounted () {
       ApiCall(API.getLanguageList,'GET')
       .then((response) => {
-        console.log('Response in created',response);
         this.languageList = response;
       })
   },
   methods: {
     
     onSubmit () {
-        let converter = new showdown.Converter();
         var name = this.title;
         var sourcecode = this.code;
         var langId = this.language;
         var fileType = 'single';
         if(sourcecode === null || langId === null){
-            this.$toasted.show('Fill proper data')
+            this.$toasted.show('Fill proper data');
         }
         else {
             ApiCall(API.runCode,'POST',{sourcecode,langId})
             .then((response) => {
                 console.log('Response',response);
                 this.$toasted.show('Submitted successfully');
-                this.outputIsReady = true;
-                this.realOutput = response.stdout;
+                
+                if(response.stderr !== null){
+                    console.log('Response err',response);
+                    this.outputIsReady = true;
+                    this.realOutput = response.stderr;
+                }
+                else{
+                    this.outputIsReady = true;
+                    this.realOutput = response.stdout;
+                }
             })
         }
     },
