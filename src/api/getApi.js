@@ -1,5 +1,7 @@
 const APIS = {
-    getCodes : 'http://localhost:8000/codes'
+    getCodes : 'http://localhost:8000/codes',
+    runCode : 'http://localhost:8000/run-code',
+    getLanguageList : 'https://api.judge0.com/languages'
 }
 
 export default APIS;
