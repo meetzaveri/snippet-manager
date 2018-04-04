@@ -1,5 +1,5 @@
 # dropsnip
-A simple code snippet manager with CRUD operations. Still in developing phase!!
+A simple code snippet manager. Still in developing phase!!
 
 ## Usage
 
