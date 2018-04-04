@@ -12,3 +12,7 @@ Switch to server directory, and run `npm install` and then to start server `node
 
 ## Want to contribute
 Switch to `development` branch and start off. Send direct PRs.
+
+## TODO
+- [ ] Improve frontend design
+- [ ] Make Documentation
