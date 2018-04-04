@@ -11,4 +11,4 @@ Simply run
 Switch to server directory, and run `npm install` and then to start server `nodemon index.js`.
 
 # Want to contribute
-Switch to `development` branch and 
+Switch to `development` branch and start off. Send direct PRs.
