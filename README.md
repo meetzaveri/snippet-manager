@@ -1,14 +1,14 @@
 # dropsnip
 A simple code snippet manager with CRUD operations. Still in developing phase!!
 
-# Usage
+## Usage
 
-## Frontend 
+### Frontend 
 Simply run 
 `npm install` and `npm run dev`
 
-## Backend
+### Backend
 Switch to server directory, and run `npm install` and then to start server `nodemon index.js`.
 
-# Want to contribute
+## Want to contribute
 Switch to `development` branch and start off. Send direct PRs.
