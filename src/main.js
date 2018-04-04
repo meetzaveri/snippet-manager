@@ -8,11 +8,16 @@ import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import { store } from './store/index';
-
+import Toasted from 'vue-toasted'
 import 'simple-line-icons/css/simple-line-icons.css';
 
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
+
+Vue.use(Toasted, {
+  position: 'bottom-center',
+  duration: 1500
+})
 
 const router =  new VueRouter({
   mode:'history',

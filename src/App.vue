@@ -3,6 +3,8 @@
     <b-nav tabs>
       <b-nav-item><router-link to="/">Home</router-link></b-nav-item>
       <b-nav-item><router-link to="/new-snippet">New Snippet</router-link></b-nav-item>
+      <b-nav-item><router-link to="/code-book">Code Book</router-link></b-nav-item>
+      <b-nav-item><router-link to="/run-code">Run code</router-link></b-nav-item>
     </b-nav>
     <b-row class="justify-content-md-center" style="margin-top: 0.5rem;">
      <router-view/>
