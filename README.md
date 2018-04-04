@@ -8,7 +8,7 @@ Simply run
 `npm install` and `npm run dev`
 
 ### Backend
-Switch to server directory, and run `npm install` and then to start server `nodemon index.js`.
+Switch to server directory, and run `npm install` and then to start server `nodemon index.js`.</br>
 Note - I have been using mLab for as part of Database-as-aservice for mongodb, so credentials are provided in config folder and that credentials are not account based but they are for specific database/collection.
 
 ## Want to contribute
