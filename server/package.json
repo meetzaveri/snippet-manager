@@ -10,9 +10,11 @@
   "author": "Meet Zaveri",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "hackerearth-node": "^2.3.9",
     "mongodb": "^3.0.4",
     "showdown": "^1.8.6"
   },
