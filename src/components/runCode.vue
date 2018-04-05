@@ -2,7 +2,7 @@
   <div style="width:600px">
     <b-form >
         <b-form-group id="exampleInputGroup1"
-                    label="Code Snippet Title"
+                    label="Execute Code"
                     label-for="exampleInput1">
         <b-form-select v-model="language" >
             <option :value="null">Select Language</option>
@@ -12,21 +12,29 @@
         </b-form-select>
       </b-form-group>
       <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code snippet"></textarea>
-      <b-button variant="primary" @click="onSubmit">Submit</b-button>
+      <b-button variant="primary" @click="onSubmit">Run</b-button>
     </b-form>
-    <div v-if="outputIsReady">
-        <textarea style="width:600px" rows="10" v-model="realOutput" placeholder="Enter code snippet"></textarea>
+    <div v-if="outputIsReady" class="mt-4">
+        <textarea style="width:600px" rows="10" v-model="realOutput" :class="afterCompileClass" placeholder="Enter code snippet"></textarea>
+    </div>
+    <div v-show="loading">
+        <lg-loader/>
     </div>
   </div>
 </template>
 
 <script>
 import API,{ ApiCall } from '../api/getApi';
+import LgLoader from './loader_lg.vue';
 
 export default {
+  components:{
+    LgLoader
+  },
   data () {
     return {
       code : null,
+      afterCompileClass : 'custom',
       title: '',
       language : '',
       outputIsReady : false,
@@ -35,6 +43,7 @@ export default {
       options : [],
       languageList : [],
       language : null,
+      loading : false
     }
   },
   mounted () {
@@ -46,26 +55,35 @@ export default {
   methods: {
     
     onSubmit () {
+        this.loading = true;
+        this.outputIsReady = false;
         var name = this.title;
         var sourcecode = this.code;
         var langId = this.language;
         var fileType = 'single';
         if(sourcecode === null || langId === null){
             this.$toasted.show('Fill proper data');
+            this.loading = false;
         }
         else {
             ApiCall(API.runCode,'POST',{sourcecode,langId})
             .then((response) => {
                 console.log('Response',response);
-                this.$toasted.show('Submitted successfully');
+                
                 
                 if(response.stderr !== null){
+                    this.loading = false;     
                     console.log('Response err',response);
+                    this.$toasted.show('Error');
                     this.outputIsReady = true;
+                    this.afterCompileClass = 'custom-danger'
                     this.realOutput = response.stderr;
                 }
                 else{
+                    this.loading = false;
                     this.outputIsReady = true;
+                    this.$toasted.show('Success');
+                    this.afterCompileClass = 'custom-success'
                     this.realOutput = response.stdout;
                 }
             })
@@ -75,3 +93,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.custom-success{
+    border : 2px solid #28a745;
+}
+.custom-danger{
+    border : 2px solid #c82333;
+}
+</style>
+
