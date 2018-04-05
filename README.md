@@ -29,14 +29,5 @@ Inspired by idea - https://github.com/karan/Projects#files.
 - [ ] Improve frontend design
 - [ ] Make Documentation
 
-## Usage
-
-### Frontend 
-Simply run 
-`npm install` and `npm run dev`
-
-### Backend
-Switch to server directory, and run `npm install` and then to start server `nodemon index.js`.
-
 ## Want to contribute
 Switch to `development` branch and start off. Send direct PRs.
