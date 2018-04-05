@@ -22,6 +22,8 @@ Switch to `development` branch and start off. Send direct PRs.
 ![1](https://i.imgur.com/ontxmA2.png)
 ![2](https://i.imgur.com/p6o7xSO.png)![3](https://i.imgur.com/AVZlMbi.png)
 
+## Inspiration
+Inspired by idea - https://github.com/karan/Projects#files.
 
 ## TODO
 - [ ] Improve frontend design
