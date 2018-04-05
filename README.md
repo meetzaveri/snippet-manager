@@ -1,4 +1,4 @@
-# dropsnip
+# drop-a-snip
 Drop snippets here! A simple code snippet manager. Still in developing phase!!
 
 ## Structure
@@ -14,8 +14,14 @@ Simply run
 Switch to server directory, and run `npm install` and then to start server `nodemon index.js`.</br>
 Note - I have been using <b>mLab</b> for as part of Database-as-aservice for mongodb, so credentials are provided in config folder and that credentials are not account based but they are for specific database/collection.
 
+
 ## Want to contribute
 Switch to `development` branch and start off. Send direct PRs.
+
+## Screenshots
+![1](https://i.imgur.com/ontxmA2.png)
+![2](https://i.imgur.com/p6o7xSO.png)![3](https://i.imgur.com/AVZlMbi.png)
+
 
 ## TODO
 - [ ] Improve frontend design
