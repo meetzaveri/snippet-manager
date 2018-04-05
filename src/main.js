@@ -16,7 +16,7 @@ Vue.use(VueRouter);
 
 Vue.use(Toasted, {
   position: 'bottom-center',
-  duration: 1500
+  duration: 24500
 })
 
 const router =  new VueRouter({

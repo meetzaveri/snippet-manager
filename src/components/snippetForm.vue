@@ -2,7 +2,7 @@
   <div style="width:600px">
     <b-form >
       <b-form-group id="exampleInputGroup1"
-                    label="Code Snippet Title"
+                    label="Code Snippet"
                     label-for="exampleInput1">
         <b-form-input id="exampleInput1"
         class="mb-3"

@@ -2,7 +2,7 @@
   <div style="width:600px">
     <b-form >
       <b-form-group id="exampleInputGroup1"
-                    label="Code Snippet Title"
+                    label="Code Book"
                     label-for="exampleInput1">
         <b-form-input id="exampleInput1"
         class="mb-3"
@@ -16,7 +16,12 @@
                       v-model="language"
                       placeholder="Enter language">
         </b-form-input>
-        <b-form-select v-model="totalPages" :options="options" class="mb-3" />
+        <b-form-select v-model="totalPages" >
+            <option :value="null">No. of Pages</option>
+            <optgroup label="Pages" >
+                <option v-for="(option,id) in options" :key="id" :value="option.value">{{option.value}}</option>
+            </optgroup>
+        </b-form-select>
       </b-form-group>
 
       <label><b-btn id="popoverButton-sync" variant="success">Guide to Markdown</b-btn></label>

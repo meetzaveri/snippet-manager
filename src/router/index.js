@@ -3,11 +3,16 @@ import Home from '../components/home.vue';
 import SnippetForm from '../components/snippetForm.vue';
 import CodeBook from '../components/codeBook.vue';
 import RunCode from '../components/runCode.vue';
+import SnipList from '../components/snipList.vue';
 
 export const routes =  [
     {
       path: '/',
-      component: Home
+      redirect:'/snip-list'
+    },
+    {
+      path: '/snip-list',
+      component: SnipList
     },
     {
       path: '/new-snippet', 

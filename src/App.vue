@@ -5,7 +5,6 @@
     </b-nav>
     
     <b-row class="justify-content-md-center" style="margin-top: 0.5rem;">
-      
      <router-view/>
     </b-row>
   </div>
@@ -16,7 +15,8 @@ export default {
   name: 'App',
   data (){
     return{
-      navList : [{home_uri:'/',home_title:'Home',nav_class : 'custom-nav' },
+      navList : [
+      {home_uri:'/snip-list',home_title:'Snippets List',nav_class : 'custom-nav' },
       {home_uri:'/new-snippet',home_title:'New Snippet',nav_class : 'custom-nav'},
       {home_uri:'/code-book',home_title:'Code Book',nav_class : 'custom-nav' },
       {home_uri:'/run-code',home_title:'Run code',nav_class : 'custom-nav' },],
@@ -58,6 +58,7 @@ export default {
   margin : 0px 10px;
 }
 .custom-nav .active{
+  color: rgb(0, 123, 255);
   background-color: rgba(0, 123, 255,0.1);
 }
 .custom-nav:hover{
