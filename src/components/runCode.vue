@@ -14,16 +14,23 @@
       <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code snippet"></textarea>
       <b-button variant="primary" @click="onSubmit">Submit</b-button>
     </b-form>
-    <div v-if="outputIsReady">
+    <div v-if="outputIsReady" class="mt-4">
         <textarea style="width:600px" rows="10" v-model="realOutput" placeholder="Enter code snippet"></textarea>
+    </div>
+    <div v-show="loading">
+        <lg-loader/>
     </div>
   </div>
 </template>
 
 <script>
 import API,{ ApiCall } from '../api/getApi';
+import LgLoader from './loader_lg.vue';
 
 export default {
+  components:{
+    LgLoader
+  },
   data () {
     return {
       code : null,
@@ -35,6 +42,7 @@ export default {
       options : [],
       languageList : [],
       language : null,
+      loading : false
     }
   },
   mounted () {
@@ -46,12 +54,15 @@ export default {
   methods: {
     
     onSubmit () {
+        this.loading = true;
+        this.outputIsReady = false;
         var name = this.title;
         var sourcecode = this.code;
         var langId = this.language;
         var fileType = 'single';
         if(sourcecode === null || langId === null){
             this.$toasted.show('Fill proper data');
+            this.loading = false;
         }
         else {
             ApiCall(API.runCode,'POST',{sourcecode,langId})
@@ -60,11 +71,13 @@ export default {
                 this.$toasted.show('Submitted successfully');
                 
                 if(response.stderr !== null){
+                    this.loading = false;
                     console.log('Response err',response);
                     this.outputIsReady = true;
                     this.realOutput = response.stderr;
                 }
                 else{
+                    this.loading = false;
                     this.outputIsReady = true;
                     this.realOutput = response.stdout;
                 }

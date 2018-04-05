@@ -1,8 +1,12 @@
 <template>
   <b-container fluid>
     <!-- User Interface controls -->
-    <b-row>
-      <b-col md="6" class="">
+    <div v-if="loading" >
+      <lg-loader></lg-loader>
+    </div>
+    <div v-else>
+      <b-row>
+      <b-col md="6" class="custom-table-search-row">
         <b-form-group horizontal label="Search" class="mb-0">
           <b-input-group>
             <b-form-input v-model="filter" placeholder="Type to Search" />
@@ -32,7 +36,8 @@
           
       </b-col>
     </b-row>
-    <b-table show-empty
+    <b-table
+              show-empty
              :bordered="bordered"
              :hover="hover"
              stacked="md"
@@ -41,7 +46,7 @@
              :current-page="currentPage"
              :filter="filter"
              @filtered="onFiltered"
-             class="justify-content-md-center"
+             class="custom-table justify-content-md-center"
     >
       
       <template slot="name" slot-scope="row">{{row.value}}</template>
@@ -64,6 +69,8 @@
         </b-card>
       </template>
     </b-table>
+    </div>
+    
 
      <b-modal id="modalInfo" size="lg" ref="modalInfo" @hide="resetModal" :body-text-variant="modalInfo.item.department" :title="modalInfo.title" ok-only>
         <!-- <pre>Title - {{ modalAddItems.title }}</pre> -->
@@ -98,8 +105,12 @@
 import API from '../api/getApi.js';
 import { ApiCall } from '../api/getApi.js';
 import APIDELETE,{ DeleteApiCall } from '../api/deleteApi'
+import LgLoader from './loader_lg.vue';
 
 export default {
+  components :{
+    LgLoader
+  },
     data () {
     return {
       items: [],
@@ -130,6 +141,7 @@ export default {
     }
   },
 created (){
+  this.loading  = true;
   ApiCall(API.getCodes,'GET')
   .then((responsJson) => {
     console.log('Response in vue',responsJson);
@@ -157,7 +169,8 @@ created (){
       return item;
     })
     this.$store.commit('fillData',{codeData:structuredData});
-    this.items = this.$store.state.binData
+    this.items = this.$store.state.binData;
+    this.loading  = false;
   })
   .catch((err) => {
     console.log('err=',err);
@@ -200,6 +213,13 @@ methods: {
 }
 </script>
 
-<style>
-
+<style scoped>
+.custom-table-search-row{
+   max-width: 75%;
+    margin-left: 12.5%;
+}
+.custom-table{
+    max-width: 75%;
+    margin-left: 12.5%;
+}
 </style>
