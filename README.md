@@ -19,8 +19,9 @@ Note - I have been using <b>mLab</b> for as part of Database-as-aservice for mon
 Switch to `development` branch and start off. Send direct PRs.
 
 ## Screenshots
-![1](https://i.imgur.com/ontxmA2.png)
-![2](https://i.imgur.com/p6o7xSO.png)![3](https://i.imgur.com/AVZlMbi.png)
+![1](https://i.imgur.com/D4LqKv0.png)
+![2](https://i.imgur.com/wzZLxfM.png)
+![3](https://i.imgur.com/RUlEzvP.png)
 
 ## Inspiration
 Inspired by idea - https://github.com/karan/Projects#files.
