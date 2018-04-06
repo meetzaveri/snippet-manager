@@ -39,9 +39,9 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Jua');
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans');
 #app {
-  font-family: 'Jua', sans-serif;
+  font-family: 'Fira Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
