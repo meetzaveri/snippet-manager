@@ -24,7 +24,7 @@ Switch to `development` branch and start off. Send direct PRs.
 ![3](https://i.imgur.com/wzZLxfM.png)
 
 
-## Inspiration
+## Motivation
 Inspired by idea - https://github.com/karan/Projects#files.
 
 ## TODO
