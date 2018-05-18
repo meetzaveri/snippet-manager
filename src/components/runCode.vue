@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import API,{ ApiCall } from '../api/getApi';
+import API,{ ApiCall } from '../api/api';
 import LgLoader from './loader_lg.vue';
 
 export default {

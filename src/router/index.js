@@ -4,14 +4,12 @@ import SnippetForm from '../components/snippetForm.vue';
 import CodeBook from '../components/codeBook.vue';
 import RunCode from '../components/runCode.vue';
 import SnipList from '../components/snipList.vue';
+import Login from '../pages/login.vue';
+import Register from '../pages/register.vue';
 
 export const routes =  [
     {
       path: '/',
-      redirect:'/snip-list'
-    },
-    {
-      path: '/snip-list',
       component: SnipList
     },
     {
@@ -25,5 +23,13 @@ export const routes =  [
     {
       path : '/run-code',
       component : RunCode
-    }
+    },
+    {
+      path : '/login',
+      component : Login
+    },
+    {
+      path : '/register',
+      component : Register
+    },
 ];

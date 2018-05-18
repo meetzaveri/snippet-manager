@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import API,{ ApiCall } from '../api/getApi';
+import API,{ ApiCall } from '../api/api';
 import showdown from 'showdown';
 
 export default {

@@ -1,5 +1,5 @@
 const APIS = {
-    getCodes : 'http://localhost:8000/codes',
+    getCodes : 'https://protected-refuge-78696.herokuapp.com/codes',
     runCode : 'http://localhost:8000/run-code',
     getLanguageList : 'https://api.judge0.com/languages'
 }
@@ -12,7 +12,7 @@ export function ApiCall(apiname,methodType,data,headers){
             method: methodType, // or 'PUT'
             body: JSON.stringify(data),
             mode : 'cors',
-            headers:  {
+            headers:  headers || {
               'Content-Type': 'application/json'
             }
        }

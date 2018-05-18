@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import API,{ ApiCall } from '../api/getApi';
 import showdown from 'showdown';
 
 export default {

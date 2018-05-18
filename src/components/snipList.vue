@@ -143,7 +143,11 @@ export default {
   },
 created (){
   this.loading  = true;
-  ApiCall(API.getCodes,'GET')
+  let token = localStorage.getItem('token');
+  ApiCall(API.getCodes,'GET',{},{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
   .then((responsJson) => {
     console.log('Response in vue',responsJson);
     var structuredData = responsJson.map((item,index) => {

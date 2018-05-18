@@ -1,12 +1,17 @@
 <template>
   <div id="app" style="margin-top: 0.5rem;">
-    <b-nav  class="custom-b-nav">
+    
+    <b-nav v-if="isLoggedIn" class="custom-b-nav">
       <b-nav-item v-for="(nav,id) in navList" :key="id" :class="nav.nav_class" @click="changeClass(id)" :to="nav.home_uri">{{nav.home_title}}</b-nav-item>
     </b-nav>
+
+    <b-nav v-else class="custom-b-nav">
+      <b-nav-item v-for="(nav,id) in beforeLoginNav" :key="id" :class="nav.nav_class" @click="changeClass(id)" :to="nav.home_uri">{{nav.home_title}}</b-nav-item>
+    </b-nav>
     
-    <b-row class="justify-content-md-center" style="margin-top: 0.5rem;">
+    <div class="" style="margin-top: 4.5rem;">
      <router-view/>
-    </b-row>
+    </div>
   </div>
 </template>
 
@@ -15,11 +20,15 @@ export default {
   name: 'App',
   data (){
     return{
+      isLoggedIn : false,
       navList : [
-      {home_uri:'/snip-list',home_title:'Snippets List',nav_class : 'custom-nav' },
-      {home_uri:'/new-snippet',home_title:'New Snippet',nav_class : 'custom-nav'},
-      {home_uri:'/code-book',home_title:'Code Book',nav_class : 'custom-nav' },
-      {home_uri:'/run-code',home_title:'Run code',nav_class : 'custom-nav' },],
+        {home_uri:'/',home_title:'Snippets List',nav_class : 'custom-nav' },
+        {home_uri:'/new-snippet',home_title:'New Snippet',nav_class : 'custom-nav'},
+        {home_uri:'/code-book',home_title:'Code Book',nav_class : 'custom-nav' },
+        {home_uri:'/run-code',home_title:'Run code',nav_class : 'custom-nav' },],
+      beforeLoginNav : [
+        {home_uri:'/register',home_title:'Sign Up',nav_class : 'custom-nav' },
+        ],
     }
   },
   methods:{
