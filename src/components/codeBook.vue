@@ -2,7 +2,7 @@
   <div class="flex-box" >
     <b-form >
       <b-form-group id="exampleInputGroup1"
-                    label="Code Book"
+                    label=""
                     label-for="exampleInput1">
         <b-form-input id="exampleInput1"
         class="mb-3"

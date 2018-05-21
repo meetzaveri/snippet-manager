@@ -1,0 +1,17 @@
+.custom-text-class{
+  text-decoration: none !important;
+}
+
+.sidebar{
+  border-right: 2px solid rgb(222, 226, 230);
+}
+
+.sidebar .sidebar-feature .sidebar-item{
+ padding: 15px 5px;
+ font-size: 18px;
+}
+
+.sidebar .sidebar-feature .sidebar-item .item-text{
+ 
+  text-decoration: none
+}

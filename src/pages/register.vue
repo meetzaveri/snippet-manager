@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import API,{ApiCall} from '../api/api'
 
 export default {
   name: 'Login',
@@ -75,9 +76,11 @@ export default {
       this.$validator.validateAll().then((result) => {
         if (result) {
             // Login API to verify user's email and password and perform actual login action
-          signUp(userData.email,userData.password,userData.name).then((data) =>{
+          ApiCall(API.register,'POST',{name:userData.name,password:userData.password,email:userData.email},
+          ).then((data) =>{
             console.log('Data:',data);
             this.$toasted.show( data.message);
+            this.$router.push('/login');
           })
           .catch((err) => {
             console.log('err:',err)

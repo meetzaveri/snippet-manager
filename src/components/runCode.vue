@@ -2,7 +2,7 @@
   <div class="flex-box">
     <b-form >
         <b-form-group id="exampleInputGroup1"
-                    label="Execute Code"
+                    label=""
                     label-for="exampleInput1">
         <b-form-select v-model="language" >
             <option :value="null">Select Language</option>
@@ -37,7 +37,6 @@ export default {
       code : null,
       afterCompileClass : 'custom',
       title: '',
-      language : '',
       outputIsReady : false,
       realOutput : '',
       show: true,

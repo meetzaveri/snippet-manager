@@ -5,76 +5,89 @@
       <lg-loader></lg-loader>
     </div>
     <div v-else>
-        <h4> Find Snippets </h4>
+      <!-- <h4> Find Snippets </h4>
       <b-row >
-      <b-col md="6" class="custom-table-search-row">
-        <b-form-group horizontal label="Search" class="mb-0" >
-          <b-input-group>
-            <b-form-input v-model="filter" placeholder="Type to Search" />
-              <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
-          </b-input-group>
-        </b-form-group>
-      </b-col>
-      <!-- <b-col md="6" class="my-1">
-        <b-form-group horizontal label="Sort" class="mb-0">
-          <b-input-group>
-            <b-form-select v-model="sortBy" :options="sortOptions">
-              <option slot="first" :value="null">-- none --</option>
-            </b-form-select>
-            <b-input-group-button>
-              <b-form-select :disabled="!sortBy" v-model="sortDesc">
-                <option :value="false">Asc</option>
-                <option :value="true">Desc</option>
-              </b-form-select>
-            </b-input-group-button>
-          </b-input-group>
-        </b-form-group>
-      </b-col> -->
-    </b-row>
+        <b-col md="6" class="custom-table-search-row">
+          <b-form-group horizontal label="Search" class="mb-0" >
+            <b-input-group>
+              <b-form-input v-model="filter" placeholder="Type to Search" />
+                <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
+            </b-input-group>
+          </b-form-group>
+        </b-col>
+      </b-row> -->
     <!-- Main table element -->
-    <b-row>
-      <b-col style="padding:10px">
-          
-      </b-col>
-    </b-row>
-    <b-table
-              show-empty
-             :bordered="bordered"
-             :hover="hover"
-             stacked="md"
-             :items="items"
-             :fields="fields"
-             :current-page="currentPage"
-             :filter="filter"
-             @filtered="onFiltered"
-             class="custom-table justify-content-md-center"
-    >
+      <!-- <b-row>
+        <b-col style="padding:10px">
+            
+        </b-col>
+      </b-row>
+      <b-table
+                show-empty
+              :bordered="bordered"
+              :hover="hover"
+              stacked="md"
+              :items="items"
+              :fields="fields"
+              :current-page="currentPage"
+              :filter="filter"
+              @filtered="onFiltered"
+              class="custom-table justify-content-md-center"
+      >
       
-      <template slot="name" slot-scope="row">{{row.value}}</template>
-      <template slot="language" slot-scope="row">{{row.value}}</template>
+        <template slot="name" slot-scope="row">{{row.value}}</template>
+        <template slot="language" slot-scope="row">{{row.value}}</template>
 
-      <template slot="actions" slot-scope="row">
-        <!-- We use @click.stop here to prevent a 'row-clicked' event from also happening -->
-        <b-button size="sm" :variant="buttons.primary" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">
-          Open
-        </b-button>
-        <b-button size="sm" :variant="buttons.danger" @click.stop="deleteRecord(row.item, row.index, $event.target)" class="mr-1">
-          Delete
-        </b-button>
-      </template>
-      <template slot="row-details" slot-scope="row">
-        <b-card>
-          <ul>
-            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value}}</li>
-          </ul>
-        </b-card>
-      </template>
-    </b-table>
+        <template slot="actions" slot-scope="row">
+
+          <b-button size="sm" :variant="buttons.primary" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">
+            Open
+          </b-button>
+          <b-button size="sm" :variant="buttons.danger" @click.stop="deleteRecord(row.item, row.index, $event.target)" class="mr-1">
+            Delete
+          </b-button>
+        </template>
+        <template slot="row-details" slot-scope="row">
+          <b-card>
+            <ul>
+              <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value}}</li>
+            </ul>
+          </b-card>
+        </template>
+      </b-table> -->
+
+      <div v-for="(item,index) in items" :key="index">
+        <b-card-group class="custom-card-design" deck>
+            <b-card :header="item.name"
+                    header-tag="header"
+                    footer="Card Footer"
+                    footer-tag="footer"
+                    >
+                
+                <div v-html="item.content"></div>
+
+                <div slot="footer">
+                    <b-row>
+                      <b-col cols="4">
+                        Date created : {{item.timestamp}}
+                      </b-col>
+                      <b-col cols="4">
+                        Language : {{item.language}}
+                      </b-col>
+                      <b-col cols="4">
+                        Type : {{item.type}}
+                      </b-col>
+                    </b-row>
+                </div>
+            </b-card>
+            
+        </b-card-group>
+      </div>
     </div>
     
 
      <b-modal id="modalInfo" size="lg" ref="modalInfo" @hide="resetModal" :body-text-variant="modalInfo.item.department" :title="modalInfo.title" ok-only>
-        <!-- <pre>Title - {{ modalAddItems.title }}</pre> -->
+
         <div v-if="typeof(modalInfo.item.content) === 'object'">
           <div v-if="inBox === undefined || inBox === '' || inBox === null">
             No Content
@@ -90,15 +103,17 @@
         </div>
         
         
-          <div slot="modal-footer" class="w-100">
-            <b-row>
-                <b-col class="text-center"> 
-                    <!-- <b-button :disabled="disabled" variant="success" @click="addnewItem" >Save</b-button> -->
-                </b-col>
-            </b-row>
-          </div>
+        <div slot="modal-footer" class="w-100">
+          <b-row>
+              <b-col class="text-center"> 
+                  
+              </b-col>
+          </b-row>
+        </div>
       </b-modal>
 
+  
+  
   </b-container>
 </template>
 
@@ -229,5 +244,9 @@ h4{
 .custom-table{
     max-width: 75%;
     margin-left: 12.5%;
+}
+
+.custom-card-design{
+  padding: 10px 10px;
 }
 </style>

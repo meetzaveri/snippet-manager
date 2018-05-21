@@ -8,6 +8,7 @@ import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'simple-line-icons/css/simple-line-icons.css';
+import './assets/css/sidebar.css';
 import { store } from './store/index';
 import Toasted from 'vue-toasted';
 import VeeValidate from 'vee-validate';
