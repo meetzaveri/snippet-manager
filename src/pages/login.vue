@@ -78,6 +78,7 @@ export default {
             this.$store.commit('setUser', { isLoggedIn: true,email:email});
             setTimeout(()=>{this.$router.push('/');}
             ,0); 
+            this.$router.push('/');
           })
           .catch((err) =>{
             console.log('Err:',err);

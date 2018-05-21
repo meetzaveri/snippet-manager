@@ -11,12 +11,14 @@
             </optgroup>
         </b-form-select>
       </b-form-group>
-      <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code snippet"></textarea>
+      <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code snippet">fwe</textarea>
+      <pre class="prettyprint" v-html="code">{{code}}</pre>
       <br>
       <b-button variant="primary" @click="onSubmit">Run</b-button>
     </b-form>
     <div v-if="outputIsReady" class="mt-4">
         <textarea style="width:600px" rows="10" v-model="realOutput" :class="afterCompileClass" placeholder="Enter code snippet"></textarea>
+        
     </div>
     <div v-show="loading">
         <lg-loader/>

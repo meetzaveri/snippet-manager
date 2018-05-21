@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="margin-top: 0.5rem;">
-    <b-btn variant="custom" class="home" ><router-link class="custom-text-class" to="/">🛠️ Snippet Manager</router-link></b-btn>
+    <b-btn variant="custom" class="home" style="background:transparent"><router-link class="custom-text-class" to="/">🛠️ Snippet Manager</router-link></b-btn>
     
     <!-- In case if user is logged in -->
     <div v-if="isLoggedIn">

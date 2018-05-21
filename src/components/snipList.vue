@@ -57,6 +57,9 @@
       </b-table> -->
 
       <div v-for="(item,index) in items" :key="index">
+        <!-- <b-btn @click="renderMdown">Click</b-btn>
+        <div v-html="mdCont"></div> -->
+        <div class="custom-round-tag"></div>
         <b-card-group class="custom-card-design" deck>
             <b-card :header="item.name"
                     header-tag="header"
@@ -120,6 +123,7 @@
 <script>
 import API from '../api/getApi.js';
 import { ApiCall } from '../api/getApi.js';
+import {rendermd} from '../utils/utils';
 import APIDELETE,{ DeleteApiCall } from '../api/deleteApi'
 import LgLoader from './loader_lg.vue';
 
@@ -130,6 +134,7 @@ export default {
     data () {
     return {
       items: [],
+      mdCont : null,
       buttons: {primary: 'primary', danger:'danger', warning: 'warning', success: 'success' },
       fields: [
         { key: 'name', label: 'Name', sortable: true, 'class': 'text-center' },
@@ -201,6 +206,9 @@ methods: {
       this.modalInfo.title = ''
       this.modalInfo.content = ''
     },
+    // renderMdown(){
+    //   this.mdCont = rendermd('```var re = 32; ```');
+    // },
     scrollLeft (){
       console.log('Current Page',this.paginationCurrentPage);
       var ind = this.paginationCurrentPage;
@@ -248,5 +256,13 @@ h4{
 
 .custom-card-design{
   padding: 10px 10px;
+}
+
+.custom-round-tag{
+  width: 20px;
+    height: 20px;
+    position: absolute;
+    background: rgb(0, 123, 255);
+    border-radius: 50%;
 }
 </style>

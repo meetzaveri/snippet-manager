@@ -12,8 +12,9 @@ import './assets/css/sidebar.css';
 import { store } from './store/index';
 import Toasted from 'vue-toasted';
 import VeeValidate from 'vee-validate';
+import VueHighlightJS from 'vue-highlightjs'
 
-
+Vue.use(VueHighlightJS)
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
