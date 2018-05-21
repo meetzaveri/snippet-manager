@@ -1,5 +1,5 @@
 <template>
-  <div style="width:600px">
+  <div class="flex-box">
     <b-form >
         <b-form-group id="exampleInputGroup1"
                     label="Execute Code"
@@ -12,6 +12,7 @@
         </b-form-select>
       </b-form-group>
       <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code snippet"></textarea>
+      <br>
       <b-button variant="primary" @click="onSubmit">Run</b-button>
     </b-form>
     <div v-if="outputIsReady" class="mt-4">

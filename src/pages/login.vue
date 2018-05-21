@@ -75,8 +75,9 @@ export default {
           ApiCall(API.login,'POST',{email,password}).then((data) =>{
             console.log('Data',data);
             localStorage.setItem('token',data.token);
-            this.$store.commit('setCurrentUsername', { isLoggedIn: true,email:email});
-            this.$router.push('/');   
+            this.$store.commit('setUser', { isLoggedIn: true,email:email});
+            setTimeout(()=>{this.$router.push('/');}
+            ,0); 
           })
           .catch((err) =>{
             console.log('Err:',err);

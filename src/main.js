@@ -16,7 +16,6 @@ import VeeValidate from 'vee-validate';
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
-
 Vue.use(Toasted, {
   position: 'bottom-center',
   duration: 1500

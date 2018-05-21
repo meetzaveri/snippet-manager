@@ -1,5 +1,5 @@
 <template>
-  <div style="width:600px">
+  <div class="flex-box" >
     <b-form >
       <b-form-group id="exampleInputGroup1"
                     label="Code Book"
