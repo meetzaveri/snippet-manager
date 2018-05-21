@@ -1,8 +1,8 @@
 <template>
-  <div style="width:600px">
+  <div class="flex-box" >
     <b-form >
       <b-form-group id="exampleInputGroup1"
-                    label="Code Book"
+                    label=""
                     label-for="exampleInput1">
         <b-form-input id="exampleInput1"
         class="mb-3"
@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import API,{ ApiCall } from '../api/getApi';
 import showdown from 'showdown';
 
 export default {

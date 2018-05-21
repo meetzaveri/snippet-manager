@@ -1,5 +1,5 @@
 <template>
-  <div style="width:600px">
+  <div class="flex-box" >
     <b-form >
       <b-form-group id="exampleInputGroup1"
                     label="Code Snippet"
@@ -11,13 +11,14 @@
                       required
                       placeholder="Enter name">
         </b-form-input>
-        <b-form-input id="exampleInput2"
-        class="mb-3"
-                      type="text"
-                      v-model="language"
-                      required
-                      placeholder="Enter language">
-        </b-form-input>
+
+        <b-form-select v-model="language" >
+            <option :value="null">Select Language</option>
+            <optgroup label="Languages" >
+                <option v-for="language in languageList" :key="language.id" :value="language.id">{{language.name}}</option>
+            </optgroup>
+        </b-form-select>
+
       </b-form-group>
       <label><b-btn id="popoverButton-sync" variant="success">Guide to Markdown</b-btn></label>
        <b-form-group class="mb-3">
@@ -41,15 +42,17 @@
 </template>
 
 <script>
-import API,{ ApiCall } from '../api/getApi';
+import API,{ ApiCall } from '../api/api';
 import showdown from 'showdown';
+import moment from 'moment'
 
 export default {
   data () {
     return {
       code : '',
       title: '',
-      language : '',
+      languageList : [],
+      language : null,
       form: {
         email: '',
         title: '',
@@ -64,14 +67,34 @@ export default {
       show: true
     }
   },
+  mounted () {
+      ApiCall(API.getLanguageList,'GET')
+      .then((response) => {
+        this.languageList = response;
+      })
+  },
   methods: {
     onSubmit () {
       let converter = new showdown.Converter();
       var name = this.title;
       var content = this.code;
-      var language = this.language;
+      var list = this.languageList;
+      var languageId = this.language;
+      var language = null;
+      list.find((item,index)=>{
+        if(index === languageId){
+          language = item.name;
+          console.log(language)
+        }
+        
+      })
+      
       var fileType = 'single';
-      ApiCall(API.getCodes,'POST',{name,content,language,fileType})
+      var token = localStorage.getItem('token');
+      ApiCall(API.getCodes,'POST',{name,content,language,fileType},{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
       .then((response) => {
         console.log('Response',response);
         this.$toasted.show('Submitted successfully');
@@ -82,3 +105,12 @@ export default {
   }
 }
 </script>
+
+<style>
+.flex-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+

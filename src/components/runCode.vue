@@ -1,8 +1,8 @@
 <template>
-  <div style="width:600px">
+  <div class="flex-box">
     <b-form >
         <b-form-group id="exampleInputGroup1"
-                    label="Execute Code"
+                    label=""
                     label-for="exampleInput1">
         <b-form-select v-model="language" >
             <option :value="null">Select Language</option>
@@ -11,11 +11,14 @@
             </optgroup>
         </b-form-select>
       </b-form-group>
-      <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code snippet"></textarea>
+      <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code snippet">fwe</textarea>
+      <pre class="prettyprint" v-html="code">{{code}}</pre>
+      <br>
       <b-button variant="primary" @click="onSubmit">Run</b-button>
     </b-form>
     <div v-if="outputIsReady" class="mt-4">
         <textarea style="width:600px" rows="10" v-model="realOutput" :class="afterCompileClass" placeholder="Enter code snippet"></textarea>
+        
     </div>
     <div v-show="loading">
         <lg-loader/>
@@ -24,7 +27,7 @@
 </template>
 
 <script>
-import API,{ ApiCall } from '../api/getApi';
+import API,{ ApiCall } from '../api/api';
 import LgLoader from './loader_lg.vue';
 
 export default {
@@ -36,7 +39,6 @@ export default {
       code : null,
       afterCompileClass : 'custom',
       title: '',
-      language : '',
       outputIsReady : false,
       realOutput : '',
       show: true,
