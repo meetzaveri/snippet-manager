@@ -3,6 +3,7 @@
 }
 
 .sidebar{
+  height: 759px;
   border-right: 2px solid rgb(222, 226, 230);
 }
 
@@ -14,4 +15,13 @@
 .sidebar .sidebar-feature .sidebar-item .item-text{
  
   text-decoration: none
+}
+
+
+@media (min-width: 1281px) {
+  
+  .custom-row{
+    max-width: 1918px;
+  }
+  
 }

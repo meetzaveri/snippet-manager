@@ -14,7 +14,7 @@
 
       <hr />
       
-      <b-row>
+      <b-row class="custom-row">
         <b-col cols="2" class="sidebar">
           <div class="sidebar-feature">
             <h3>User Details</h3>
@@ -37,6 +37,13 @@
                  <span > Run Code</span>
               </router-link>
             </div>
+
+            <div class="sidebar-item">
+              <router-link  class="item-text" to="/markdown-preview">
+                 <span > Markdown Preview</span>
+              </router-link>
+            </div>
+
           </div>
         </b-col>
 
@@ -71,7 +78,7 @@ export default {
   data (){
     return{
       isLoggedIn : this.$store.state.userLoggedIn,
-      email : localStorage.getItem('email'),
+      email : this.$store.state.email,
       navList : [
         {home_uri:'/new-snippet',home_title:'Create new snippet',nav_class : 'custom-nav'},],
       beforeLoginNav : [
@@ -161,5 +168,23 @@ export default {
   text-decoration: none
 }
 
+.flex-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+pre {
+  overflow-x: auto;
+    display: block;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
 </style>

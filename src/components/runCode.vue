@@ -1,28 +1,40 @@
 <template>
-  <div class="flex-box">
-    <b-form >
-        <b-form-group id="exampleInputGroup1"
-                    label=""
-                    label-for="exampleInput1">
-        <b-form-select v-model="language" >
-            <option :value="null">Select Language</option>
-            <optgroup label="Languages" >
-                <option v-for="language in languageList" :key="language.id" :value="language.id">{{language.name}}</option>
-            </optgroup>
-        </b-form-select>
-      </b-form-group>
-      <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code snippet">fwe</textarea>
-      <pre class="prettyprint" v-html="code">{{code}}</pre>
-      <br>
-      <b-button variant="primary" @click="onSubmit">Run</b-button>
-    </b-form>
-    <div v-if="outputIsReady" class="mt-4">
-        <textarea style="width:600px" rows="10" v-model="realOutput" :class="afterCompileClass" placeholder="Enter code snippet"></textarea>
+  <div class="">
+    <b-row>
         
-    </div>
-    <div v-show="loading">
-        <lg-loader/>
-    </div>
+        <b-col cols="6" class="custom-code-part">
+            <h2> Code, compile and execute </h2>
+            <b-form >
+                <b-form-group id="exampleInputGroup1"
+                            label=""
+                            label-for="exampleInput1">
+                <b-form-select v-model="language" >
+                    <option :value="null">Select Language</option>
+                    <optgroup label="Languages" >
+                        <option v-for="language in languageList" :key="language.id" :value="language.id">{{language.name}}</option>
+                    </optgroup>
+                </b-form-select>
+            </b-form-group>
+            <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code "></textarea>
+            <pre class="prettyprint" v-html="code">{{code}}</pre>
+            <br>
+            <b-button variant="primary" @click="onSubmit">Run</b-button>
+            </b-form>
+        </b-col>
+
+        <b-col cols="6">
+            <h3>Output</h3>
+            <div v-if="outputIsReady" class="mt-4">
+                <textarea style="width:300px" rows="10" v-model="realOutput" :class="afterCompileClass" placeholder="Enter code snippet"></textarea>
+            </div>
+            <div v-else class="mt-4">
+                Nothing to show here
+            </div>
+            <div v-show="loading">
+                <lg-loader/>
+            </div>
+        </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -102,6 +114,10 @@ export default {
 }
 .custom-danger{
     border : 2px solid #c82333;
+}
+
+.custom-code-part{
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 </style>
 

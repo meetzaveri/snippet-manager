@@ -1,16 +1,18 @@
+var hljs = require('highlight.js') // https://highlightjs.org/
 
-var hljs = require('highlight.js'); // https://highlightjs.org/
-
-// Actual default values
-// enable everything
 var md = require('markdown-it')({
-  html: true,
-  linkify: true,
-  typographer: true
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(lang, str, true).value;
+      } catch (__) {}
+    }
+
+    return ''; // use external default escaping
+  }
 });
-var result = md.render('# markdown-it rulezz!');
 
 export function rendermd(markdown){
-
+  
   return md.render(markdown);
 }

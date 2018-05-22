@@ -107,10 +107,6 @@ export default {
 </script>
 
 <style>
-.flex-box{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 </style>
 
