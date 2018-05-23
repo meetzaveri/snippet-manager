@@ -5,6 +5,8 @@
 .sidebar{
   height: 759px;
   border-right: 2px solid rgb(222, 226, 230);
+  position: fixed;
+  overflow-y: auto;
 }
 
 .sidebar .sidebar-feature .sidebar-item{

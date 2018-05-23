@@ -27,6 +27,7 @@ export const store = new Vuex.Store({
         setUser(state,payload){
           state.userLoggedIn = true;
           localStorage.setItem('email',payload.email);
+          state.email = payload.email
         },
 
         updateLog(state,payload){

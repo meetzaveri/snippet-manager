@@ -111,8 +111,8 @@
 </template>
 
 <script>
-import API from '../api/getApi.js';
-import { ApiCall } from '../api/getApi.js';
+import API from '../api/api.js';
+import { ApiCall } from '../api/api.js';
 import {rendermd} from '../utils/utils';
 import APIDELETE,{ DeleteApiCall } from '../api/deleteApi'
 import LgLoader from './loader_lg.vue';
@@ -265,6 +265,11 @@ h4{
   padding: 10px 10px;
 }
 
+.card-container {
+   margin-bottom: 5em;
+   padding: 30px 100px;
+}
+     
 .card-container .custom-round-tag{
   width: 20px;
     height: 20px;

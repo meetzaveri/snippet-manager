@@ -1,8 +1,8 @@
 // const APIS = {
 //   getCodes : 'https://protected-refuge-78696.herokuapp.com/codes',
-//   runCode : 'http://localhost:8000/run-code',
+//   runCode : 'https://protected-refuge-78696.herokuapp.com/run-code',
 //   login :'https://protected-refuge-78696.herokuapp.com/login',
-//   register : 'http://localhost:8000/createuser',
+//   register : 'https://protected-refuge-78696.herokuapp.com/createuser',
 //   getLanguageList : 'https://api.judge0.com/languages',
 //   getCodeSnippet : ''
 // }
