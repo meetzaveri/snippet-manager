@@ -16,7 +16,7 @@
                 </b-form-select>
             </b-form-group>
             <textarea style="width:600px" rows="10" v-model="code" placeholder="Enter code "></textarea>
-            <pre class="prettyprint" v-html="code">{{code}}</pre>
+            
             <br>
             <b-button variant="primary" @click="onSubmit">Run</b-button>
             </b-form>

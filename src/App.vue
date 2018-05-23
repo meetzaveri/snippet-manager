@@ -22,7 +22,7 @@
           <div class="sidebar-feature">
             <h3>User Details</h3>
             <div class="sidebar-item">
-              <span class="item-text">{{email}}</span>
+              <span class="item-text">Email : {{email}}</span>
               <br>
               <b-btn class="sign-out" variant="danger" @click="signOut()">Sign Out</b-btn>
             </div>
