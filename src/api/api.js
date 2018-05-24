@@ -13,7 +13,8 @@ const APIS = {
   login :'http://localhost:8000/login',
   register : 'http://localhost:8000/createuser',
   getLanguageList : 'https://api.judge0.com/languages',
-  getCodeSnippet : ''
+  getCodeById : 'http://localhost:8000/codes/',
+  updateCodeById : 'http://localhost:8000/codes/'
 }
 
 export default APIS;
