@@ -16,7 +16,7 @@
               <b-form-input :disabled="selectedMdEditor" id="exampleInput1"
               class="mb-3"
                             type="text"
-                            v-model="title"
+                            v-model="titleMd"
                             required
                             placeholder="Enter name">
               </b-form-input>
@@ -52,7 +52,7 @@
               <b-form-input :disabled="selectedTextEditor" id="exampleInput1"
               class="mb-3"
                             type="text"
-                            v-model="title"
+                            v-model="titleTe"
                             required
                             placeholder="Enter name">
               </b-form-input>
@@ -90,13 +90,13 @@ import { quillEditor } from 'vue-quill-editor'
 export default {
   data () {
     return {
-      code : '',
-      title: '',
-      content :'',
+      code : null,
+      titleMd: null,
+      titleTe : null,
+      content :null,
       languageList : [],
       selectedMdEditor: true,
       selectedTextEditor : true,
-      content:'',
       language : null,
       show: true,
       mdEditorOnSelectProperty : 'opacity:0.4;border : 2px dotted #333;',
@@ -128,18 +128,32 @@ export default {
       
       this.selectedTextEditor = !this.selectedTextEditor;
     },
-    onSubmit () {
-      let converter = new showdown.Converter();
-      var name = this.title;
+    onSubmit (name) {
+      console.log(this.titleMd,this.titleTe,name);
+      let title = '';
+      if(!this.selectedMdEditor){
+        title = this.titleMd;
+      } else if(!this.selectedTextEditor){
+        title = this.titleTe;
+      } else{
+        title = this.titleMd;
+      }
+      
+
       var content = '';
       var fileType = '';
+
       if(this.code){
         content = this.code;
-        fileType = 'single';
-      } else{
+        fileType = 'markdown';
+      } else if(this.content){
         content = this.content;
         fileType = 'textnote';
+      } else{
+        content = this.code;
+        fileType = 'markdown';
       }
+
       var list = this.languageList;
       var languageId = this.language;
       var language = null;
@@ -147,14 +161,15 @@ export default {
         if(index === languageId){
           language = item.name;
           console.log(language)
+        } else {
+          language = 'none'
         }
         
       })
-      console.log({name,content,language,fileType});
-
+      console.log({title,content,language,fileType});
       
       var token = localStorage.getItem('token');
-      ApiCall(API.getCodes,'POST',{name,content,language,fileType},{
+      ApiCall(API.getCodes,'POST',{name:title,content,language,fileType},{
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
       })
