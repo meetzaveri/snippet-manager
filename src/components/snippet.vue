@@ -100,6 +100,7 @@ export default {
       language : null,
       show: true,
       languageName : '',
+      fileType : null,
       mdEditorOnSelectProperty : 'opacity:0.4;border : 2px dotted #333;',
       textEditorOnSelectProperty : 'opacity:0.4;border : 2px dotted #333;',
     }
@@ -126,11 +127,19 @@ export default {
           this.languageName = data.language;
           this.title = data.name;
           this.mdEditorOnSelectProperty = 'opacity:1;border:none;';
-        } else {
+          this.fileType = data.fileType;
+        } else if(data.fileType === 'textnote') {
           this.selectedTextEditor = !this.selectedTextEditor;
           this.content = data.content;
           this.title = data.name;
           this.textEditorOnSelectProperty = 'opacity:1;border:none;';
+          this.fileType = data.fileType;
+        } else{
+          this.selectedMdEditor = !this.selectedMdEditor;
+          this.code = data.raw_cont;
+          this.languageName = data.language;
+          this.title = data.name;
+          this.mdEditorOnSelectProperty = 'opacity:1;border:none;';
         }
       })
       ApiCall(API.getLanguageList,'GET')
@@ -158,7 +167,7 @@ export default {
       let converter = new showdown.Converter();
       var name = this.title;
       var content = '';
-      var fileType = '';
+      var fileType = this.fileType;
       const id = this.$route.params.userId;
       if(this.code){
         content = this.code;
@@ -171,7 +180,8 @@ export default {
         fileType = 'markdown';
       }
       var token = localStorage.getItem('token');
-      ApiCall(API.updateCodeById + id,'PUT',{name,content},{
+
+      ApiCall(API.updateCodeById + id,'PUT',{name,content,fileType},{
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
       })

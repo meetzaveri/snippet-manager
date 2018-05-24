@@ -196,6 +196,9 @@ export default {
   align-items: center;
   justify-content: center;
 }
+.card-body{
+  padding: 1.25rem 20.25rem;
+}
 pre {
   overflow-x: auto;
     display: block;

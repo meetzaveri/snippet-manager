@@ -20,11 +20,14 @@
       <b-row class="custom-margin-class"> 
        <b-col cols="8">
           <b-form-group class="mb-3">
-                <textarea @input="renderOut" style="width:100%;" rows="10" v-model="code" placeholder="Enter code snippet"></textarea>
+                <textarea style="width:100%;" rows="10" v-model="code" placeholder="Enter code snippet"></textarea>
               </b-form-group>
         </b-col>
         <b-col cols="4">
-          <pre style="min-height:100px;" >{{codeOutput}} </pre>
+
+        <!-- If you want to highlight hardcoded source-code -->
+         <pre v-highlightjs><code class="javascript"> {{code}} </code></pre>
+        <pre v-highlightjs><code class="javascript">const s = new Date().toString()</code></pre>
         </b-col>
         
       </b-row>
@@ -48,8 +51,10 @@ export default {
   data () {
     return{
       content:null,
-      code : null,
+      code : '',
       codeOutput: '',
+      kode : 'const s = new Date().toString()',
+      sc : ''
     }
   },
   methods : {
