@@ -1,31 +1,42 @@
 <template>
   <div id="app" style="margin-top: 0.5rem;">
-    <b-btn variant="custom" class="home" style="background:transparent"><router-link class="custom-text-class" to="/">🛠️ Snippet Manager</router-link></b-btn>
+    <!-- <b-btn variant="custom" class="home" style="background:transparent"><router-link class="custom-text-class" to="/">🛠️ Snippet Manager</router-link></b-btn> -->
     
     <!-- In case if user is logged in -->
     <div v-if="isLoggedIn">
-      <b-nav class="custom-b-nav">
+      <!-- <b-nav class="custom-b-nav">
         
         <b-nav-item v-for="(nav,id) in navList" :key="id" :class="nav.nav_class" :to="nav.home_uri">{{nav.home_title}}</b-nav-item>
         
 
         <b-btn class="sign-out" variant="danger" @click="signOut()">Sign Out</b-btn>
-      </b-nav>
-
-      <hr />
+      </b-nav> -->
       
-      <b-row>
+      <b-row class="custom-row">
         <b-col cols="2" class="sidebar">
+          <b-btn variant="custom" class="home" style="background:transparent"><router-link class="custom-text-class" to="/">🛠️ Snippet Manager</router-link></b-btn>
+          <!-- <ul class="custom-b-nav nav"><li class="nav-item custom-nav"><a href="/new-snippet" class="nav-link" target="_self">Create new snippet</a></li></ul> -->
+          <hr />
+          
+          
           <div class="sidebar-feature">
             <h3>User Details</h3>
             <div class="sidebar-item">
-              <span class="item-text">{{email}}</span>
+              <span class="item-text">Email : {{email}}</span>
+              <br>
+              <b-btn class="sign-out" variant="danger" @click="signOut()">Sign Out</b-btn>
             </div>
           </div>
           <hr />
           <div class="sidebar-feature">
             <h3>Features</h3>
             
+            <div class="sidebar-item">
+              <router-link class="item-text" to="/new-snippet">
+                 <span > Create a new snippet</span>
+              </router-link>
+            </div>
+
             <div class="sidebar-item">
               <router-link class="item-text" to="/code-book">
                  <span > Code Book </span>
@@ -37,10 +48,17 @@
                  <span > Run Code</span>
               </router-link>
             </div>
+
+            <div class="sidebar-item">
+              <router-link  class="item-text" to="/markdown-preview">
+                 <span > Markdown Preview</span>
+              </router-link>
+            </div>
+
           </div>
         </b-col>
 
-        <b-col cols="8" class="right-container" style="margin-top: 4.5rem;">
+        <b-col cols="10" class="right-container" style="margin-top: 4.5rem;">
           <router-view/>
         </b-col>
       </b-row>
@@ -48,7 +66,8 @@
     </div>
 
     <!-- In case if user is not logged in -->
-    <div v-else>
+    <div v-else class="before-login-nav">
+      <b-btn variant="custom" class="home custom-logo-before-login" style="background:transparent"><router-link class="custom-text-class" to="/">🛠️ Snippet Manager</router-link></b-btn>
       <b-nav  class="custom-b-nav">
         <b-nav-item v-for="(nav,id) in beforeLoginNav" :key="id" :class="nav.nav_class" @click="changeClass(id)" :to="nav.home_uri">{{nav.home_title}}</b-nav-item>
         
@@ -71,7 +90,7 @@ export default {
   data (){
     return{
       isLoggedIn : this.$store.state.userLoggedIn,
-      email : localStorage.getItem('email'),
+      email : this.$store.state.email,
       navList : [
         {home_uri:'/new-snippet',home_title:'Create new snippet',nav_class : 'custom-nav'},],
       beforeLoginNav : [
@@ -146,14 +165,12 @@ export default {
   background-color: rgba(0, 123, 255,0.1);
   transition: all 0.4s ease;
 }
-.sign-out{
-  position: absolute;
+.custom-row .sign-out{
   top:2px;
   right: 10px;
   margin-top: 25px;
 }
-.home{
-  position: absolute;
+.custom-row .home{
   top:2px;
   left: 10px;
   margin-top: 20px;
@@ -161,5 +178,36 @@ export default {
   text-decoration: none
 }
 
+.before-login-nav .custom-logo-before-login{
+  position: absolute;
+  top:2px;
+  left: 10px;
+  margin-top: 20px;
+  font-size: 28px;
+  text-decoration: none
+}
+.custom-row .right-container{
+  padding-left: 2%;
+  margin-left: 16%;
+}
+
+.flex-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+pre {
+  overflow-x: auto;
+    display: block;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
 </style>

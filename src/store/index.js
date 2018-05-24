@@ -24,9 +24,13 @@ export const store = new Vuex.Store({
             }
           })
         },
+        updateBinData(state,payload){
+          state.binData = payload.updatedData;
+        },
         setUser(state,payload){
           state.userLoggedIn = true;
           localStorage.setItem('email',payload.email);
+          state.email = payload.email
         },
 
         updateLog(state,payload){

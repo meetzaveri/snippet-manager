@@ -1,5 +1,5 @@
 const APIS = {
-    deleteCodes : 'http://localhost:8000/codes'
+    deleteCodes : 'http://localhost:8000/codes/'
 }
 
 export default APIS;
@@ -10,7 +10,7 @@ export function DeleteApiCall(apiname,methodType,data,headers){
             method: methodType, // or 'PUT'
             body: JSON.stringify(data),
             mode : 'cors',
-            headers:  {
+            headers:  headers || {
               'Content-Type': 'application/json'
             }
        }

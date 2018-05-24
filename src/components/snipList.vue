@@ -5,58 +5,11 @@
       <lg-loader></lg-loader>
     </div>
     <div v-else>
-      <!-- <h4> Find Snippets </h4>
-      <b-row >
-        <b-col md="6" class="custom-table-search-row">
-          <b-form-group horizontal label="Search" class="mb-0" >
-            <b-input-group>
-              <b-form-input v-model="filter" placeholder="Type to Search" />
-                <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
-            </b-input-group>
-          </b-form-group>
-        </b-col>
-      </b-row> -->
-    <!-- Main table element -->
-      <!-- <b-row>
-        <b-col style="padding:10px">
-            
-        </b-col>
-      </b-row>
-      <b-table
-                show-empty
-              :bordered="bordered"
-              :hover="hover"
-              stacked="md"
-              :items="items"
-              :fields="fields"
-              :current-page="currentPage"
-              :filter="filter"
-              @filtered="onFiltered"
-              class="custom-table justify-content-md-center"
-      >
-      
-        <template slot="name" slot-scope="row">{{row.value}}</template>
-        <template slot="language" slot-scope="row">{{row.value}}</template>
+      <div v-if="ifContentIsThere">
+        <h2> No snippets yet created </h2>
+      </div>
 
-        <template slot="actions" slot-scope="row">
-
-          <b-button size="sm" :variant="buttons.primary" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">
-            Open
-          </b-button>
-          <b-button size="sm" :variant="buttons.danger" @click.stop="deleteRecord(row.item, row.index, $event.target)" class="mr-1">
-            Delete
-          </b-button>
-        </template>
-        <template slot="row-details" slot-scope="row">
-          <b-card>
-            <ul>
-              <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value}}</li>
-            </ul>
-          </b-card>
-        </template>
-      </b-table> -->
-
-      <div v-for="(item,index) in items" :key="index">
+      <div v-else class="card-container" v-for="(item,index) in items" :key="index">
         <!-- <b-btn @click="renderMdown">Click</b-btn>
         <div v-html="mdCont"></div> -->
         <div class="custom-round-tag"></div>
@@ -66,10 +19,27 @@
                     footer="Card Footer"
                     footer-tag="footer"
                     >
+                <div slot="header">
+                  <b-row class="custom-snippet-header-row">
+                    <b-col cols="12">
+                      <h3>{{item.name}}</h3>
+                    </b-col>
+                    <div >
+                      <div class="custom-header-btns">
+                        <b-btn variant="primary" @click="onEdit(item.id)"><i class="icon-pencil"></i></b-btn>
+                        <b-btn variant="danger" @click="onDelete(item.id)" style="padding-top: 8px !important;padding-bottom: 3px!important;"><i class="icon-close" style="font-size:20px;"></i></b-btn>
+                      </div>
+                    </div>
+                    
+                  </b-row>
+                </div>        
+                <div>
+                  <div v-html="item.content"></div>
+                </div>
                 
-                <div v-html="item.content"></div>
-
+                <!-- <quill-editor v-model="item.content"></quill-editor> -->
                 <div slot="footer">
+                  <div>
                     <b-row>
                       <b-col cols="4">
                         Date created : {{item.timestamp}}
@@ -81,66 +51,41 @@
                         Type : {{item.type}}
                       </b-col>
                     </b-row>
+                  </div>
+                    
                 </div>
             </b-card>
             
         </b-card-group>
       </div>
     </div>
-    
 
-     <b-modal id="modalInfo" size="lg" ref="modalInfo" @hide="resetModal" :body-text-variant="modalInfo.item.department" :title="modalInfo.title" ok-only>
-
-        <div v-if="typeof(modalInfo.item.content) === 'object'">
-          <div v-if="inBox === undefined || inBox === '' || inBox === null">
-            No Content
-          </div>
-          <div v-else>
-            <div v-html="inBox"></div>
-          </div>
-          <b-pagination align="center" size="md" :total-rows="100" v-model="paginationCurrentPage" :per-page="modalInfo.item.totalPages" @input="scrollLeft">
-            </b-pagination>
-        </div>
-        <div v-else>
-          <div v-html="modalInfo.item.content"></div>
-        </div>
-        
-        
-        <div slot="modal-footer" class="w-100">
-          <b-row>
-              <b-col class="text-center"> 
-                  
-              </b-col>
-          </b-row>
-        </div>
-      </b-modal>
-
-  
-  
   </b-container>
 </template>
 
 <script>
-import API from '../api/getApi.js';
-import { ApiCall } from '../api/getApi.js';
+import API from '../api/api.js';
+import { ApiCall } from '../api/api.js';
 import {rendermd} from '../utils/utils';
 import APIDELETE,{ DeleteApiCall } from '../api/deleteApi'
 import LgLoader from './loader_lg.vue';
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+import { quillEditor } from 'vue-quill-editor'
 
 export default {
   components :{
-    LgLoader
+    LgLoader,
+    quillEditor
   },
     data () {
     return {
-      items: [],
+      items: null,
       mdCont : null,
+      ifContentIsThere : false,
+      content: '',
       buttons: {primary: 'primary', danger:'danger', warning: 'warning', success: 'success' },
-      fields: [
-        { key: 'name', label: 'Name', sortable: true, 'class': 'text-center' },
-        { key: 'language', label: 'language', sortable: true, 'class': 'text-center' },
-        { key: 'actions', label: 'Actions', 'class': 'text-center' }
-      ],
       variants: [
         'primary'
       ],
@@ -150,6 +95,7 @@ export default {
       paginationCurrentPage : 1,
       totalPages : null,
       currentPage: 1,
+      editToggle : false,
       totalRows: null,
       filter: null,
       bordered: true,
@@ -170,6 +116,9 @@ created (){
       })
   .then((responsJson) => {
     console.log('Response in vue',responsJson);
+    if(responsJson.length === 0){
+      this.ifContentIsThere = true
+    }
     var structuredData = responsJson.map((item,index) => {
       item.id = item._id;
       if(typeof(item.content) === "object"){
@@ -201,41 +150,39 @@ created (){
     console.log('err=',err);
   })
 },
+updated(){
+  this.items = this.$store.state.binData;
+},
 methods: {
-   resetModal () {
-      this.modalInfo.title = ''
-      this.modalInfo.content = ''
+    onEdit(id){
+      this.editToggle = true;
+      this.$router.push({ name: 'snippet', params: { userId: id }})
     },
-    // renderMdown(){
-    //   this.mdCont = rendermd('```var re = 32; ```');
-    // },
-    scrollLeft (){
-      console.log('Current Page',this.paginationCurrentPage);
-      var ind = this.paginationCurrentPage;
-      this.inBox = this.modalInfo.item.content[ind - 1];
-      console.log('Inbox',this.inBox);
-    },
-    onFiltered (filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length
-      this.currentPage = 1
-      //  console.log('Response');
-    },
-    info (item, index,button) {
-      this.modalInfo.title = `Open`
-      this.modalInfo.content = JSON.stringify(item, null, 2);
-      this.modalInfo.item = JSON.parse(JSON.stringify(item));
-      this.inBox = this.modalInfo.item.content[this.paginationCurrentPage - 1];
-      this.$root.$emit('bv::show::modal', 'modalInfo', button)
-      // console.log('In Info',this.modalInfo.item);
-    },
-    deleteRecord(item, index,button){
-      console.log('Item to be deleted',item);
-      DeleteApiCall(APIDELETE.deleteCodes+'/'+item.id,'DELETE',{id:item.id})
-      .then((responsJson) => {
-        this.$store.commit('deleteItem',{id : item.id});
-        console.log(responsJson);
+    onDelete(id){
+      var token = localStorage.getItem('token');
+      
+      DeleteApiCall(APIDELETE.deleteCodes + id,'DELETE',{id:id},{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
       })
+      .then((response) => {
+        console.log('Delete Response',response);
+        let newItemObj = [];
+        this.items.forEach((item,index) => {
+          if(item.id === id){
+            
+          } else {
+            newItemObj.push(item);
+          }
+        })
+        console.log('NewItemObj',newItemObj);
+        this.$store.commit('updateBinData',{updatedData : newItemObj});
+        this.$forceUpdate();
+        this.$toasted.show('Deleted successfully');
+      })
+    },
+    onCancelOperation(){
+      this.editToggle = false;
     }
 }
 }
@@ -258,11 +205,26 @@ h4{
   padding: 10px 10px;
 }
 
-.custom-round-tag{
+.card-container {
+   margin-bottom: 5em;
+   padding: 30px 100px;
+}
+     
+.card-container .custom-round-tag{
   width: 20px;
     height: 20px;
     position: absolute;
     background: rgb(0, 123, 255);
     border-radius: 50%;
+}
+
+.card-container .custom-card-design .custom-snippet-header-row{
+  position: relative;
+}
+
+.card-container .custom-card-design .custom-snippet-header-row .custom-header-btns{
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 </style>
