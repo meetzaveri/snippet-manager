@@ -82,7 +82,7 @@ export default {
           })
           .catch((err) =>{
             console.log('Err:',err);
-            this.$toasted.show('Err:' + err)
+            this.$toasted.show(err);
           })
         } else {
           this.$toasted.show('Enter all fields correctly')
