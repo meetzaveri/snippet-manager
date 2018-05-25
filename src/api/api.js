@@ -41,6 +41,14 @@ export function ApiCall(apiname,methodType,data,headers){
                 reject(new Error('Unauthorized'));
                 console.log('ERROR')
             }
+            else if(response.status === 401){
+              reject(new Error('Unauthorized, Enter correct password'));
+              console.log('ERROR')
+            }
+            else if(response.status === 404){
+              reject(new Error('User Not Found'));
+              console.log('ERROR')
+            }
             else if((response.status === 200) || 
             ((response.status === 304) )) {
                   resolve(response.json());
