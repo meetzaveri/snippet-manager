@@ -1,8 +1,11 @@
 # drop-a-snip
 Drop snippets here! A simple code snippet manager. Still in developing phase!!
 
-## Structure
-![Architecture](https://i.imgur.com/citP2xr.png)
+# Features
+- Create Snippets (Text and markdown)
+- Write a Code Book(15 pages limited)
+- Compile and run code with third party API
+- Markdown and Text Editor Preview (lookup to html)
 
 ## Usage
 
@@ -19,9 +22,8 @@ Note - I have been using <b>mLab</b> for as part of Database-as-aservice for mon
 Switch to `development` branch and start off. Send direct PRs.
 
 ## Screenshots
-![1](https://i.imgur.com/cUpBPty.png)
-![2](https://i.imgur.com/GjcWi8t.png)
-![3](https://i.imgur.com/wzZLxfM.png)
+![1](https://i.imgur.com/lzyHVVU.png)
+![2](https://i.imgur.com/FVrfth6.png)
 
 
 ## Motivation
