@@ -23,6 +23,8 @@ Switch to `development` branch and start off. Send direct PRs.
 
 ## Screenshots
 ![1](https://i.imgur.com/lzyHVVU.png)
+
+### Creating a snippet
 ![2](https://i.imgur.com/FVrfth6.png)
 
 
