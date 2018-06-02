@@ -1,5 +1,5 @@
-# drop-a-snip
-Drop snippets here! A simple code snippet manager. Still in developing phase!!
+# snip
+Create snippets,edit and run code! A simple code snippet manager. Still in developing phase!!
 
 # Features
 - Create Snippets (Text and markdown)
