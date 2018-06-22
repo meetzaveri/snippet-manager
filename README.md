@@ -11,7 +11,7 @@ Create snippets,edit and run code! A simple code snippet manager. Still in devel
 
 ### Frontend (Vue.js)
 Simply run 
-`npm install` and `npm run dev`
+`npm install` and for running on localhost `npm run dev`
 
 ### Backend (Node.js and Mongodb for database)
 Switch to server directory, and run `npm install` and then to start server `nodemon index.js`.</br>
