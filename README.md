@@ -1,4 +1,4 @@
-# snip
+# Snippet manager
 Create snippets,edit and run code! A simple code snippet manager. Still in developing phase!!
 
 # Features
